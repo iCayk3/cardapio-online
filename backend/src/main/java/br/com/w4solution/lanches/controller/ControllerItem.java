@@ -1,6 +1,6 @@
 package br.com.w4solution.lanches.controller;
 
-import br.com.w4solution.lanches.domain.item.Item;
+import br.com.w4solution.lanches.domain.item.Categoria;
 import br.com.w4solution.lanches.dto.CadastrarItemDto;
 import br.com.w4solution.lanches.dto.ItemDto;
 import br.com.w4solution.lanches.service.ItemService;
@@ -21,8 +21,8 @@ public class ControllerItem {
     ItemService serivce;
 
     @GetMapping
-    public ResponseEntity<List<ItemDto>> listarItem(){
-        var itens = serivce.listarItens().stream().map(ItemDto::new).toList();
+    public ResponseEntity<List<ItemDto>> listarItem(@RequestParam(required = false) Categoria categoria){
+        var itens = serivce.listarItens(categoria).stream().map(ItemDto::new).toList();
         return ResponseEntity.ok().body(itens);
     }
 

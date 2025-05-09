@@ -5,5 +5,6 @@ public enum Categoria {
     LANCHE,
     COMIDA,
     DOCE,
-    SOBREMESA
+    SOBREMESA,
+    SALGADO
 }

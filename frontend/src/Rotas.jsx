@@ -3,6 +3,7 @@ import Login from "./Pages/Login"
 import Dashboard from "./Pages/Dashboard"
 import PrivateRoute from "./Componentes/PrivateRoute"
 import Cadastro from "./Pages/Cadastro"
+import Cardapio from "./Pages/Cardapio"
 
 
 function Rotas() {
@@ -17,6 +18,14 @@ function Rotas() {
           element={
             <PrivateRoute >
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cardapio"
+          element={
+            <PrivateRoute >
+              <Cardapio />
             </PrivateRoute>
           }
         />

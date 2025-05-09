@@ -1,5 +1,6 @@
 package br.com.w4solution.lanches.service;
 
+import br.com.w4solution.lanches.domain.item.Categoria;
 import br.com.w4solution.lanches.domain.item.Item;
 import br.com.w4solution.lanches.dto.CadastrarItemDto;
 import br.com.w4solution.lanches.repository.ItemRepository;
@@ -29,7 +30,7 @@ public class ItemService {
                 String nomeArquivo = UUID.randomUUID() + "_" +
                         imagem.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
 
-                Path pastaUpload = Paths.get(System.getProperty("user.dir"), "imagens");
+                Path pastaUpload = Paths.get(System.getProperty("user.dir"), "imagens/imagens");
                 if (!Files.exists(pastaUpload)) {
                     Files.createDirectories(pastaUpload);
                 }
@@ -50,7 +51,10 @@ public class ItemService {
         return item;
     }
 
-    public List<Item> listarItens() {
+    public List<Item> listarItens(Categoria filtro) {
+        if(filtro != null){
+            return repository.findAllByCategoria(filtro);
+        }
         return repository.findAll();
     }
 }

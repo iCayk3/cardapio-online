@@ -1,4 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const DashEstilizada = styled.main`
+    
+`
 
 
 const Dashboard = () => {
@@ -11,10 +16,10 @@ const Dashboard = () => {
         navigate('/login', { replace: true }); // redireciona corretamente
     }
 
-    return <>
+    return <DashEstilizada>
         <h1>Dashboard</h1>
         <button onClick={sair}>Sair</button>
-    </>
+    </DashEstilizada>
 }
 
 export default Dashboard

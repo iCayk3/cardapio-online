@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import InputLabel from "../../Componentes/InputLabel";
 import { Button, Link, ThemeProvider } from "@mui/joy";
-import { color, createTheme } from "@mui/system";
+import { createTheme } from "@mui/system";
 import { useEffect, useState } from "react";
 import Api from "../../Service/Api";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ const LoginEstilizado = styled.main`
 `
 
 const estilos = {
-    color : '#7FFBC5'
+    color: '#7FFBC5'
 }
 
 const theme = createTheme({
@@ -82,18 +82,23 @@ const theme = createTheme({
 });
 
 const Login = () => {
+
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
+    const [erroCode, setErrorCode] = useState(200)
+
     const UseApi = Api();
     const navigate = useNavigate();
 
     const aoAlteradoUsuario = (e) => {
         e.preventDefault();
+        setErrorCode(200)
         setUsuario(e.target.value);
     };
 
     const aoAlteradoSenha = (e) => {
         e.preventDefault();
+        setErrorCode(200)
         setSenha(e.target.value);
     };
 
@@ -110,6 +115,7 @@ const Login = () => {
                 console.error('Token não encontrado na resposta');
             }
         } catch (error) {
+            setErrorCode(error.status)
             console.error('Erro ao fazer login:', error);
         }
     };
@@ -131,26 +137,46 @@ const Login = () => {
                 <div className="formulario">
                     <form onSubmit={logar}>
                         <h1>TOP LANCHES</h1>
-                        <InputLabel
+                        {erroCode === 200 ? <InputLabel
                             valor={usuario}
                             aoAlterado={aoAlteradoUsuario}
                             label="Login"
-                            cor="neutral"
                             tamanho="lg"
                             variante="outlined"
                             estilos={estilos}
                         />
-                        <InputLabel
-                            valor={senha}
-                            aoAlterado={aoAlteradoSenha}
-                            label="Senha"
-                            cor="neutral"
-                            tamanho="lg"
-                            variante="outlined"
-                            tipo="password"
-                            estilos={estilos}
-
-                        />
+                            :
+                            <InputLabel
+                                valor={usuario}
+                                aoAlterado={aoAlteradoUsuario}
+                                label="Login"
+                                tamanho="lg"
+                                variante="outlined"
+                                estilos={estilos}
+                                status={erroCode}
+                            />}
+                        {erroCode === 200 ?
+                            <InputLabel
+                                valor={senha}
+                                aoAlterado={aoAlteradoSenha}
+                                label="Senha"
+                                tamanho="lg"
+                                variante="outlined"
+                                tipo="password"
+                                estilos={estilos}
+                            /> :
+                            <InputLabel
+                                valor={senha}
+                                aoAlterado={aoAlteradoSenha}
+                                label="Senha"
+                                tamanho="lg"
+                                variante="outlined"
+                                tipo="password"
+                                estilos={estilos}
+                                status={erroCode}
+                                messagem="Usuário ou senha inválidos!"
+                            />
+                        }
                         <div>
                             <Button variant="solid" sx={{ width: '55%', backgroundColor: 'action.active' }} type="submit">
                                 Logar

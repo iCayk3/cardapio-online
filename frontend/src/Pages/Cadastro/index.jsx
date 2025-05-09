@@ -3,6 +3,8 @@ import InputLabel from "../../Componentes/InputLabel";
 import { Button } from "@mui/joy";
 import styled from "styled-components";
 import Api from "../../Service/Api";
+import { useNavigate } from "react-router-dom";
+
 
 const CadastroEstilizado = styled.main`
 
@@ -26,6 +28,7 @@ const Cadastro = () => {
 
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
+    const navigate = useNavigate();
     const UseApi = Api();
     const [erroCode, setErrorCode] = useState(200)
 
@@ -53,6 +56,7 @@ const Cadastro = () => {
             const form = { usuario, senha };
             const response = await UseApi('usuario/cadastro', 'POST', form);
             console.log(response)
+            navigate('/login', { replace: true }); // redireciona corretamente
         } catch (error) {
             setErrorCode(error.status)
             console.error('Erro ao fazer login:', error);
@@ -61,7 +65,7 @@ const Cadastro = () => {
 
     return <CadastroEstilizado>
         <form onSubmit={cadastrar}>
-            <h1>CADASTRAR USUARIO TOP LANCHES</h1>
+            <h1>CADASTRAR USUARIO TOP LANCHES </h1>
             {erroCode === 409 ?
                 <InputLabel
                     valor={usuario}

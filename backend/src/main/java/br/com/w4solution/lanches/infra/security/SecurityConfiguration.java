@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "usuario/**").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/usuario/ativar/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/imagens/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
